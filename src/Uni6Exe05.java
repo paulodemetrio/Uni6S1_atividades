@@ -22,21 +22,62 @@ Afinidade	Mensagem
 
 import java.util.Scanner;
 
-public class Uni6Exe05 {    
+public class Uni6Exe05 {
     public static void main(String[] args) {
         Scanner scan = new Scanner(System.in);
-        String[] respostasRapaz = Ler(scan);
-        String[] respostasMoca = Ler(scan);
+        String enunciado = "Responda com SIM, NAO ou IND (indiferente)";
+        String perguntas[] = { "Gosta de música sertaneja? ", "Gosta de futebol? ", "Gosta de seriados? ", "Gosta de redes sociais? ", "Gosta da Oktoberfest? " };
+        System.out.println("Respostas do rapaz: ");
+        String[] resRapaz = Ler(scan, enunciado, perguntas);
+        System.out.println("--------------------------");
+        System.out.println("Respostas da moça: ");
+        String[] resMoca = Ler(scan, enunciado, perguntas);
+        System.out.println("--------------------------");
+        CalculaAfinidade(resRapaz, resMoca);
     }
 
-    private static String[] Ler(Scanner scan){
+    private static String[] Ler(Scanner scan, String enunciado, String[] perguntas) {
         String[] respostas = new String[5];
-        String perguntas[] = {"Gosta de música sertaneja?", "Gosta de futebol?", "Gosta de seriados?", "Gosta de redes sociais?", "Gosta da Oktoberfest?"};
         for (int i = 0; i < respostas.length; i++) {
-            System.out.print(perguntas[i]);
-            respostas[i] = scan.next();
+            System.out.println(enunciado);
+            do {
+                System.out.print(perguntas[i]);
+                respostas[i] = scan.next().toUpperCase();
+                if (!(respostas[i].equals("SIM") || respostas[i].equals("NAO") || respostas[i].equals("IND"))) {
+                    System.out.println("Resposta inválida. Digite SIM, NAO ou IND.");
+                }
+            } while (!(respostas[i].equals("SIM") || respostas[i].equals("NAO") || respostas[i].equals("IND")));
+        }
+        return respostas;
+    }
+
+    private static void CalculaAfinidade(String[] resRapaz, String[] resMoca) {
+        int pontoAfinidade = 0;
+        int totalAfinidade = 0;
+        for (int i = 0; i < resRapaz.length; i++) {
+            if (resRapaz[i].equals(resMoca[i])) {
+                pontoAfinidade = 3;
+            } else if (resRapaz[i].equals("IND") || resMoca[i].equals("IND")) {
+                pontoAfinidade = 1;
+            } else {
+                pontoAfinidade = -2;
+            }
+            totalAfinidade += pontoAfinidade;
+            pontoAfinidade = 0;
+        }
+        if (totalAfinidade <= -10) {
+            System.out.println("Afinidade: " + totalAfinidade + ". Vocês se odeiam!");
+        } else if (totalAfinidade >= -9 && totalAfinidade <= -1) {
+            System.out.println("Afinidade: " + totalAfinidade + ". Melhor não peder tempo.");
+        } else if (totalAfinidade >= 0 && totalAfinidade <= 4) {
+            System.out.println("Afinidade: " + totalAfinidade + ". Vale um encontro.");
+        } else if (totalAfinidade >= 5 && totalAfinidade <= 9) {
+            System.out.println("Afinidade: " + totalAfinidade + ". Talvez não dê certo :(");
+        } else if (totalAfinidade >= 10 && totalAfinidade <= 14) {
+            System.out.println("Afinidade: " + totalAfinidade + ". Vocês têm muita coisa em comum!");
+        } else if (totalAfinidade >= 15) {
+            System.out.println("Afinidade: " + totalAfinidade + ". Casem!");
         }
     }
 
-    
 }
