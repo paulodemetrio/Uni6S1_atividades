@@ -26,6 +26,16 @@ public class Uni6Exe06 {
     private static void EncontraValor(Scanner scan, double[] vetor){
         System.out.println("Informe por fim outro valor real, podendo estar no vetor ou não.");
         double valor = scan.nextDouble();
-        
+        int contador =  0;
+        for (int i = 0; i < vetor.length; i++) {
+            if (valor == vetor[i]) {
+                contador++;
+            }
+        }
+        if (contador > 0){
+            System.out.println("O número " + valor + " aparece no vetor " + contador + "x.");
+        } else {
+            System.out.println("O número " + valor + " não está no vetor.");
+        }
     }
 }
