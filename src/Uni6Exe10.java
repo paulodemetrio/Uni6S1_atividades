@@ -9,7 +9,8 @@
 “7 – Inverter valores ”: desafio (ver abaixo);
 “8 – Sair do sistema ”: nesta opção deve ser finalizada a execução do programa.
 Faça um método para cada uma das opções do menu. O menu deve-se repetir até que o usuário escolha a opção 8.
-Para a opção "6 - Ordenar valores" se pode usar o "método bolha" explicado neste vídeo. Existem também outros vídeos que mostram a lógica de ordenação usando o "método bolha", no caso é só procurar por "Bubble Sort". Um deles é Bubble Sort | GeeksforGeeks. Um outro um pouco mais "divertido" procura mostrar a lógica usando uma coreografia de dança: Bubble sort with Hungarian, folk dance. E, por fim, tem uma forma interativa e visual com explicação em: https://www.hackerearth.com/practice/algorithms/sorting/bubble-sort/visualize/.*/
+Para a opção "6 - Ordenar valores" se pode usar o "método bolha" explicado neste vídeo. Existem também outros vídeos que mostram a lógica de ordenação usando o "método bolha", no caso é só procurar por "Bubble Sort". Um deles é Bubble Sort | GeeksforGeeks. Um outro um pouco mais "divertido" procura mostrar a lógica usando uma coreografia de dança: Bubble sort with Hungarian, folk dance. E, por fim, tem uma forma interativa e visual com explicação em: https://www.hackerearth.com/practice/algorithms/sorting/bubble-sort/visualize/.
+Desafio: adapte o código acima para ter mais uma opção no menu para também poder inverter os elementos dentro de um vetor. Assim o último elemento passa a ser o primeiro, o penúltimo passa ser o segundo, e assim sucessivamente para todos os elementos da lista. Mas lembre, não se deve considerar o vetor inteiro, mas somente os elementos que já foram adicionados no vetor. Como base use o código descrito em vetorInverter.java.*/
 
 import java.util.Arrays;
 import java.util.Scanner;
@@ -51,18 +52,19 @@ public class Uni6Exe10 {
                     ExcluirValor(scan, vetor);
                     break;
                 case 5:
-                    MostrarVetor(vetor);
+                    MostrarVetor(vetor, posicao);
                     break;
                 case 6:
-                    OrdenarVetor(vetor);
+                    OrdenarVetor(vetor, posicao);
                     break;
                 case 7:
-
+                    InverterVetor(vetor, posicao);
                     break;
                 case 8:
-
+                    System.out.println("Sistema encerrado.");
                     break;
                 default:
+                    System.out.println("Opção inválida!");
                     break;
             }
         } while (op != 8);
@@ -122,7 +124,6 @@ public class Uni6Exe10 {
                 System.out.println("O número " + nExclui + " encontrado na posição " + i + " foi excluído.");
                 for (int j = i; j < (vetor.length - 1); j++) {
                     vetor[j] = vetor[j + 1];
-                    System.out.println(vetor[j]);
                 }
                 return;
             }
@@ -130,17 +131,43 @@ public class Uni6Exe10 {
         System.out.println("O número " + nExclui + " não foi encontrado no vetor.");
     }
 
-    private static void MostrarVetor(int[] vetor) {
+    private static void MostrarVetor(int[] vetor, int posicao) {
         System.out.println("Mostrando o vetor: ");
-        for (int i = 0; i < vetor.length; i++) {
+        for (int i = 0; i < posicao; i++) {
             System.out.println("Posição " + i + ": [" + vetor[i] + "]");
         }
     }
 
-    private static void OrdenarVetor(int[] vetor) {
-        Arrays.sort(vetor);
-        for (int i = 0; i < vetor.length; i++) {
-            System.out.println("Posição " + i + ": [" + vetor[i] + "]");
+    private static void OrdenarVetor(int[] vetor, int posicao) {
+        /*
+         * Método padrão:
+         * Arrays.sort(vetor);
+         * for (int i = 0; i < posicao; i++) {
+         * System.out.println("Posição " + i + ": [" + vetor[i] + "]");
+         * }
+         */
+        int temporaria = 0;
+        for (int i = 0; i < posicao - 1; i++) {
+            for (int j = 0; j < posicao - 1 - i; j++) {
+                if (vetor[j] > vetor[j + 1]) {
+                    temporaria = vetor[j];
+                    vetor[j] = vetor[j + 1];
+                    vetor[j + 1] = temporaria;
+                }
+            }
         }
+        System.out.println("Vetor ordenado com sucesso!");
+    }
+
+    private static void InverterVetor(int vet[], int posicao) {
+        int temp = 0;
+        for (int i = 0; i < posicao; i++) {
+            for (int j = 0; j < i; j++) {
+                temp = vet[i];
+                vet[i] = vet[j];
+                vet[j] = temp;
+            }
+        }
+        System.out.println("Vetor invertido com sucesso!");
     }
 }
