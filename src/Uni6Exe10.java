@@ -131,6 +131,7 @@ public class Uni6Exe10 {
     }
 
     private static void MostrarVetor(int[] vetor) {
+        System.out.println("Mostrando o vetor: ");
         for (int i = 0; i < vetor.length; i++) {
             System.out.println("Posição " + i + ": [" + vetor[i] + "]");
         }
